@@ -1,0 +1,12 @@
+ul {
+    list-style: none;
+}
+
+#numbers-random li{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#timer {
+    color: rgb(221, 255, 0);
+}
