@@ -29,15 +29,15 @@
 
                     <!-- numeri random -->
                     <ul class="d-flex justify-content-between d-none" id="numbers-random">
-                        <li>45</li>
-                        <li>78</li>
-                        <li>36</li>
-                        <li>89</li>
-                        <li>20</li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
                     </ul>
 
                     <!-- regole gioco -->
-                    <p class="fs-5">
+                    <p class="fs-5 game-rules">
                         Clicca il pulsante per Visualizzare 5 numeri casuali. <br>
                         Da lì parte un timer di 30 secondi. <br> <br>
                         Dopo 30 secondi i numeri scompaiono e appaiono invece 5 input in cui devi inserire i numeri che
@@ -51,39 +51,39 @@
 
 
                     <!-- form input numeri da compilare -->
-                    <form class="d-none">
+                    <form class="d-none" id="user-form">
                         <p>Inserisci tutti i numeri che ricordi (l'ordine non è importante)</p>
 
                         <div class="row row-cols-5 mb-3">
 
                             <div class="col">
-                              <input type="number" class="form-control">
+                              <input type="number" id="number1" class="form-control">
                             </div>
 
                             <div class="col">
-                              <input type="number" class="form-control">
+                              <input type="number" id="number2" class="form-control">
                             </div>
 
                             <div class="col">
-                              <input type="number" class="form-control">
+                              <input type="number" id="number3" class="form-control">
                             </div>
 
                             <div class="col">
-                              <input type="number" class="form-control">
+                              <input type="number" id="number4" class="form-control">
                             </div>
 
                             <div class="col">
-                              <input type="number" class="form-control">
+                              <input type="number" id="number5" class="form-control">
                             </div>
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Conferma</button>
+                        <button type="submit" class="btn btn-primary" id="btn-form-user">Conferma</button>
 
                     </form>
 
                     <!-- messaggio numeri individuati -->
-                    <p class="mt-3 d-none">Hai individuato 3 numeri! (22,38,23)</p>
+                    <p class="mt-3 d-none" id="message-end-game">Hai individuato 3 numeri! (22,38,23)</p>
 
                 </section>
             </div>
