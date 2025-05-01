@@ -21,38 +21,57 @@ const mesEndGame = document.getElementById("message-end-game");
 
 
 
-
+// VARIABILE PER SALVARE A LIVELLO GLOBALE I NUMERI RANDOM
+// PER CONFRONTARLI CON I NUMERE DELL'UTENTE
 let generatedNumbers = [];
 
 
-// evento al click del bottone GENERA NUMERI
+/*********** EVENTO AL CLICK PER IL BOTTONE GENERA NUMERI *************/
 btnGenNumElem.addEventListener("click", function () {
+
 
     gameRulesElem.classList.add("d-none");
     numRandomElem.classList.remove("d-none");
     btnGenNumElem.classList.add("d-none");
 
-    // ciclo numeri random
+
+    // VARIABILE PER SALVARE E AGGGIORNARE A LIVELLO BLOCK I NUMERI RANDOM
     generatedNumbers = [];
-    
-    for (let i = 0; i < arrayNumRandomElem.length; i++) {
+
+
+    // utilizzo il ciclo while per evitare duplicati nei numeri random.
+    // Non uso il ciclo for perchè se trovo un numero che è già incluso, 
+    // il for va avanti "incrementa" (potrei quindi trovarmi con meno di 5 numeri) 
+    // mentre con while se è già incluso, mi genera i numeri fin quando 
+    // non trova un numero non incluso e poi "incrementa".
+    let i = 0;
+    while ( i < arrayNumRandomElem.length) {
         
         const num = Math.floor(Math.random() * 100) + 1;
-        
-        arrayNumRandomElem[i].innerText = num;
-        generatedNumbers.push(num);
+
+        if (!generatedNumbers.includes(num)) {
+
+            arrayNumRandomElem[i].innerText = num;
+            generatedNumbers.push(num);
+            i++
+        }
+
     }
     
+    
+    
 
-    // intevallo timer
+    // VARIABILE PER IL CONTEGGIO DEI SECONDI
     let progress = 0;
 
+    // intevallo timer
     const intervalId = setInterval(function () {
 
         if (progress < 2) {
 
             progress++
             timerElem.innerHTML = progress;
+
         } else {
 
             clearInterval(intervalId);
@@ -65,13 +84,31 @@ btnGenNumElem.addEventListener("click", function () {
 });
 
 
-// evento al click submit form
+
+// VARIABILE FLAG (PER IL RESET)
+let btnReset = false;
+
+/***********  EVENTO AL CLICK SUBMIT FORM ************/
 userForm.addEventListener("submit", eventForm);
 
 function eventForm(event) {
-    event.preventDefault();
+    event.preventDefault(); // funzione per togliere l'aggiornamento
+                            // automatico al click del bottone submit
 
-    mesEndGame.classList.remove("d-none");
+
+    // condizione per attivare/non attivare il reset                        
+    if (btnReset) {
+
+        resetGame()
+
+        return
+    }
+
+
+// cambio il bottone "conferma" in "RIPROVA!"
+btnFormUser.innerHTML = "Riprova!";
+btnFormUser.classList.add("btn-success");
+
 
 // prelevo i valori input
 const primo = primoInput.value;
@@ -80,15 +117,15 @@ const terzo = terzoInput.value;
 const quarto = quartoInput.value;
 const quinto = quintoInput.value;
 
-const strNumUser = `${primo} ${secondo} ${terzo} ${quarto} ${quinto}`
 
-const arrayNumUser = strNumUser.split(" ");
-
+// array dei numeri dell'utente
+const arrayNumUser = [primo, secondo, terzo, quarto, quinto];
 
 
 // ciclo per confronto numeri USER & RANDOM
 let contNum = 0;
 let numTrovati = [];
+
 for (let i = 0; i < arrayNumUser.length; i++) {
 
     let curArrayNumUser = parseInt(arrayNumUser[i]);
@@ -99,7 +136,47 @@ for (let i = 0; i < arrayNumUser.length; i++) {
     
 }
 
-
+// attivo il messaggio di fine gioco
+mesEndGame.classList.remove("d-none");
 mesEndGame.innerHTML = `Hai individuato ${contNum} numeri! (${numTrovati.join(", ")})`;
+
+// cambio la variabile flag in true.
+// così al secondo click parte il reset
+btnReset = true;
+
+}
+
+
+
+// funzione con regole di reset
+function resetGame() {
+
+    // cambio la variabile flag in false.
+    // così al click ripartono le regole senza attivare il reset
+    btnReset = false;
+
+    // reset gli elementi per tornare all'inizio del gioco
+    userForm.classList.add("d-none");
+    gameRulesElem.classList.remove("d-none");
+    btnGenNumElem.classList.remove("d-none");
+
+    // reset i valori del form
+    userForm.reset(); 
+
+
+    // reset i numeri random
+    for (let i = 0; i < arrayNumRandomElem.length; i++) {
+        
+        arrayNumRandomElem[i].innerText = ""; 
+    }
+
+    // ripristino del bottone CONFERMA
+    btnFormUser.innerHTML = "Conferma";
+    btnFormUser.classList.remove("btn-success");
+
+
+    // reset del messaggio finale
+    mesEndGame.classList.add("d-none");
+    mesEndGame.innerHTML = "";
 
 }
