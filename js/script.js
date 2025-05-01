@@ -67,7 +67,7 @@ btnGenNumElem.addEventListener("click", function () {
     // intevallo timer
     const intervalId = setInterval(function () {
 
-        if (progress < 2) {
+        if (progress < 30) {
 
             progress++
             timerElem.innerHTML = progress;
@@ -148,7 +148,7 @@ btnReset = true;
 
 
 
-// funzione con regole di reset
+// FUNZIONE PER IL RESET
 function resetGame() {
 
     // cambio la variabile flag in false.
